@@ -1,19 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
+import useLocalStorage from 'components/Hooks/Hooks';
 import { ContactForm } from '../Phonebook/Phonebook';
 import ContactList from '../ContactList/ContactList';
 import Filter from '../Filter/Filter';
 import Title from '../Title/Title';
 
 export default function App() {
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(localStorage.getItem('contacts')) || [];
-  });
+  const [contacts, setContacts] = useLocalStorage ('contacts', [])
   const [filtered, setFilter] = useState('');
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
+  
   const removeContact = event => {
     setContacts(contacts.filter(contact => contact.id !== event));
   };
