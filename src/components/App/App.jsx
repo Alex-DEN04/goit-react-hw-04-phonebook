@@ -7,10 +7,9 @@ import Title from '../Title/Title';
 
 export default function App() {
   const [contacts, setContacts] = useState(() => {
-    return JSON.parse(localStorage.getItem('contacts'));
+    return JSON.parse(localStorage.getItem('contacts')) || [];
   });
   const [filtered, setFilter] = useState('');
-
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
@@ -20,7 +19,6 @@ export default function App() {
   };
 
   const formSubmitHandler = data => {
-    console.log(data);
     for (const contact of contacts) {
       if (contact.name.toLowerCase() === data.name.toLowerCase()) {
         return alert(`${data.name} is already in contacts`);
@@ -37,7 +35,7 @@ export default function App() {
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(normolizedFilter)
   );
-  
+
   return (
     <>
       <div>
